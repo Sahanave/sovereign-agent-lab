@@ -79,13 +79,7 @@ OUTPUTS_DIR.mkdir(exist_ok=True)
 # technically acceptable. The QUESTION asks for "at least 160 guests."
 
 VENUES_BASELINE = """\
-The Albanach: capacity=180, vegan=yes, status=available
-The Bow Bar: capacity=80, vegan=yes, status=full
-The Guilford Arms: capacity=200, vegan=no, status=available
-The Hanging Bat: capacity=70, vegan=yes, status=available
-The Haymarket Vaults: capacity=160, vegan=yes, status=available
-The Grain Store: capacity=170, vegan=no, status=available
-The Ensign Ewart: capacity=120, vegan=yes, status=available
+The Albanach has capacity for 180 people, offers vegan options, and is currently available. The Bow Bar has capacity for 80 people, also offers vegan options, but is currently full. The Guilford Arms can host 200 people, does not offer vegan options, and is available. The Hanging Bat has capacity for 70 people, offers vegan options, and is available. The Haymarket Vaults can accommodate 160 people, offers vegan options, and is available. The Grain Store has capacity for 170 people, does not offer vegan options, and is available. The Ensign Ewart has capacity for 120 people, offers vegan options, and is also available.
 """
 
 QUESTION = (
