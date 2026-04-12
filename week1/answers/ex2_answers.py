@@ -12,7 +12,6 @@ Run `python grade.py ex2` to check for obvious issues.
 # Example: ["check_pub_availability", "get_edinburgh_weather"]
 
 TASK_A_TOOLS_CALLED = ["check_pub_availability", "check_pub_availability","calculate_catering_cost","get_edinburgh_weather","generate_event_flyer"]
-
 # Which venue did the agent confirm? Must be one of:
 # "The Albanach", "The Haymarket Vaults", or "none"
 TASK_A_CONFIRMED_VENUE = "The Albanach"
@@ -24,7 +23,7 @@ TASK_A_CATERING_COST_GBP = 5600.0
 # Did the weather tool return outdoor_ok = True or False?
 TASK_A_OUTDOOR_OK = True
 
-TASK_A_NOTES = "The agent confirmed both venues and calculated the catering cost for both. It was clear about the error it encountered when trying to generate the promotional flyer."   # optional — anything unexpected
+TASK_A_NOTES = "The agent confirmed both venues and calculated the catering cost for both. It was very clear about the file it errored on to generate the promotional flyer."   # optional — anything unexpected
 
 # ── Task B ─────────────────────────────────────────────────────────────────
 
@@ -42,8 +41,8 @@ TASK_B_PROMPT_USED = "Professional event flyer for Edinburgh AI Meetup, tech pro
 # Scenario 1: first choice unavailable
 # Quote the specific message where the agent changed course. Min 20 words.
 SCENARIO_1_PIVOT_MOMENT = """
-The pivot moment was when The Bow Bar returned status "full" and the agent moved on to check other venues.
-  [TOOL_CALL] → check_pub_availability({"pub_name": "The Bow Bar", "required_capacity": "160", "requires_vegan": "true"})
+Pivot moment is when Bow bar returned full and the agent checked the other venues. 
+  [TOOL_CALL] → check_pub_availability({"pub_name": "The Bow Bar", "required_capacity": "160", "requires_vegan": "true")
   [TOOL]
   {"success": true, "pub_name": "The Bow Bar", "address": "80 West Bow, Edinburgh", "capacity": 80, "vegan": true, "status": "full", "meets_all_constraints": false}
 """
@@ -64,7 +63,7 @@ SCENARIO_3_TRIED_A_TOOL = False   # True or False
 SCENARIO_3_RESPONSE = "Your input is lacking necessary details. Please provide more information or specify the task you need help with."
 
 # Would this behaviour be acceptable in a real booking assistant? Min 30 words.
-SCENARIO_3_ACCEPTABLE = """I think the answer is acceptable because the agent did not make up a venue. I would have liked the agent to explain what it can do and why it could not help, since the input was a valid question but out of scope for this assistant.
+SCENARIO_3_ACCEPTABLE = """I think the answer is acceptable because the agent did not make up a venue. I would have liked agent explaining what it can do and why it is not acceptable as the input was quite valid but it is out of scope.  
 """
 
 # ── Task D ─────────────────────────────────────────────────────────────────
@@ -92,8 +91,8 @@ graph TD;
 
 # Compare the LangGraph graph to exercise3_rasa/data/rules.yml. Min 30 words.
 TASK_D_COMPARISON = """
-LangGraph is better suited for handling out-of-scope questions and unexpected failures than RASA. RASA is more deterministic in the sense that we can predict its failures more easily.
-The agent code can be reused across tasks, whereas the YAML format does not lend itself as much to reusability in its current form.
+Langraph graph is better suited as it can handle out of scope questions and failures better than RASA. RASA is more deterministic in sense we can read it failures better.
+The agent code can be reused, the yaml format does extend that much to reusability in this state.
 """
 
 # ── Reflection ─────────────────────────────────────────────────────────────
@@ -102,6 +101,6 @@ The agent code can be reused across tasks, whereas the YAML format does not lend
 # Must reference a specific behaviour from your run.
 
 MOST_SURPRISING = """
-The image generated had spelling errors. While running Task C, Scenario 1 (First Choice Unavailable), when the first choice was unavailable, the agent did not pivot to the first available alternative. Instead, it checked all other venues and went with the last one.
-When asked an out-of-scope question, the agent did not call a tool, but it also did not inform the user that the question was out of scope or explain what it is designed to help with.
+The image generated had spelling errors. While checking for  TASK C() Scenario 1 — First Choice Unavailable) when the first choice was unavailable, the agent did not pivot to the first choice available. It checked for all the other venues and went went with last choice.
+When the agent is asked our of scope question, it did not call a tool.  It did not let the user know that it is out of scope and that it can only help with the tasks it is designed for.  
 """
