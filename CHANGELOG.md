@@ -8,6 +8,69 @@ and tagged with the originating GitHub issue or PR where applicable.
 
 ---
 
+## [1.2.1] — 2026-04-13
+
+Dummy-proofing patch release on top of [1.2.0]. No code semantics change;
+this release makes the Makefile more forgiving of common setup mistakes
+and addresses one piece of cohort feedback around Exercise 3 grading.
+
+### Added
+
+- **`make doctor` target.** A new diagnostic command for when students
+  are stuck and can't tell what's wrong. It walks through every common
+  setup failure mode (uv installation, upstream git remote, `.env`
+  contents, BOM marker, venv existence, module imports) and prints a
+  pass/fail per check with an actionable fix hint for each failure.
+  Instructors should reach for this as the first response to "nothing
+  works" in Discord: *"Run `make doctor` and paste the output."*
+  *File:* `Makefile` (new `doctor` target).
+
+### Fixed
+
+- **Makefile `check-env` false positives.** The earlier `check-env`
+  target grep-matched the placeholder string `sk-your-key-here`
+  anywhere in `.env`, so a student who put their real key on the
+  `NEBIUS_KEY=` line but left the string in a comment or in another
+  variable would still fail the check. `check-env` now parses the
+  uncommented `NEBIUS_KEY=` line specifically, extracts the value in
+  isolation, and validates it. It also detects and reports the four
+  other common `.env` mistakes with specific fix hints: a UTF-8 BOM
+  marker (Windows Notepad), quotes around the value, spaces around the
+  `=` sign, and an empty value. Each failure mode produces a distinct
+  error message naming the exact fix.
+  *File:* `Makefile` (`check-env` target rewritten).
+
+- **Makefile `ex2-b` stale TODO messaging.** The earlier `make ex2-b`
+  printed `"Implement the TODO in venue_tools.py first"` and pointed at
+  a `# ── TODO` block that no longer exists after the [1.1.0] flyer-tool
+  rewrite. The target now describes the graceful-fallback pattern and
+  tells students to look for the `mode` field in the output and record
+  it in `ex2_answers.py → TASK_B_MODE`.
+  *File:* `Makefile` (`ex2-b` target).
+
+- **`grade.py` — `CALM_VS_OLD_RASA` is now a WARN, not a FAIL** (raised
+  in anonymous cohort feedback). This field asked students to compare
+  Rasa Pro CALM with pre-CALM open-source Rasa 3.x — a comparison that
+  requires prior knowledge of old Rasa, which was never taught in the
+  course. Blocking a submission on a 30-word answer to this question
+  was punishing students for material they were never assigned. The
+  grader now treats the field as optional: PASS at ≥30 words, WARN at
+  anything shorter or blank. The prompt in `ex3_answers.py` is
+  unchanged, so students who filled it in lose nothing, and students
+  who left it blank are no longer blocked. This mirrors the [1.1.0]
+  handling of `WEEK_5_ARCHITECTURE`.
+  *File:* `week1/grade.py` (`check_ex3` function).
+
+### Notes
+
+Students who are pulling Rod's tests at grading time will see the 
+`CALM_VS_OLD_RASA` downgrade reflected automatically. 
+There is no student-side change needed. The grader still
+reports the field's status in the output, just as a warning rather than
+a failure.
+
+---
+
 ## [1.2.0] — 2026-04-13
 
 Narrative consolidation release. Removes the "Track A (OpenClaw Automator)
@@ -210,7 +273,8 @@ to apply.
 ### Notes
 
 **Submission mechanics.** Submissions are read from the `main` branch
-of each student's GitHub fork. Commits on feature branches are not graded.
+of each student's GitHub fork. There is no separate upload or form.
+Commits on feature branches are not graded.
 
 ```bash
 git checkout main

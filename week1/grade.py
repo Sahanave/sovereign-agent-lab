@@ -407,13 +407,45 @@ def check_ex3() -> None:
         ("OUT_OF_SCOPE_COMPARISON", 40),
         ("SETUP_COST_VALUE", 40),
         ("TASK_B_HOW_YOU_TESTED", 20),
-        ("CALM_VS_OLD_RASA", 30),
     ]:
         val = getattr(a, var, "")
         wc = word_count(val)
         record(
             PASS if is_filled(val) and wc >= min_w else FAIL,
             f"{var} filled in and ≥ {min_w} words (found {wc})",
+        )
+
+    # CALM_VS_OLD_RASA is now a WARN instead of FAIL.
+    #
+    # Rationale (2026-04-13, addressing anonymous cohort feedback):
+    # This field asks students to compare Rasa Pro CALM to "old Rasa"
+    # (the pre-CALM open-source 3.x release line). Students in this cohort
+    # were never taught old Rasa and have no reason to know it. Asking a
+    # 30-word comparison as a FAIL-blocking check punishes people for not
+    # having done prior work outside the course. A student who leaves it
+    # blank is not demonstrating incompetence — they are demonstrating that
+    # they read only the material they were assigned.
+    #
+    # We keep the prompt in ex3_answers.py for anyone who does know old Rasa
+    # and wants to answer (it's a reasonable reflection for context), but
+    # we downgrade the check so that a blank or short answer cannot block
+    # submission. This mirrors how we already handle WEEK_5_ARCHITECTURE.
+    calm = getattr(a, "CALM_VS_OLD_RASA", "")
+    calm_wc = word_count(calm)
+    if is_filled(calm) and calm_wc >= 30:
+        record(PASS, f"CALM_VS_OLD_RASA filled in and ≥ 30 words (found {calm_wc})")
+    elif is_filled(calm):
+        record(
+            WARN,
+            f"CALM_VS_OLD_RASA has {calm_wc} words — aim for 30 if you know old Rasa, "
+            f"otherwise leave as-is (not blocking)",
+        )
+    else:
+        record(
+            WARN,
+            "CALM_VS_OLD_RASA not filled in — optional, not blocking. "
+            "This question assumes familiarity with pre-CALM Rasa which "
+            "was not part of the course material.",
         )
 
 
