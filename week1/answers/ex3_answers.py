@@ -520,12 +520,9 @@ Is there anything else I can help you with?
 # Min 30 words.
 
 CALM_VS_OLD_RASA = """
-FILL ME IN
-
-Think about:
-- What does the LLM handle now that Python handled before?
-- What does Python STILL handle, and why (hint: business rules)?
-- Is there anything you trusted more in the old approach?
+In the old Rasa, Python handled slot extraction via regex and intent classification via NLU training examples. CALM offloads both to the LLM, which means no regex maintenance and no retraining when phrasing changes.
+Python still handles the £300 deposit limit check in ActionValidateBooking because that is a hard business rule where LLM interpretation would be unpredictable and potentially unsafe.
+The old approach felt more auditable for slot extraction — a regex for guest_count is easy to reason about. The LLM extraction is more flexible but harder to test exhaustively.
 """
 
 # ── The setup cost ─────────────────────────────────────────────────────────
@@ -539,10 +536,5 @@ Think about:
 # Min 40 words.
 
 SETUP_COST_VALUE = """
-FILL ME IN
-
-Be specific. What can the Rasa CALM agent NOT do that LangGraph could?
-Is that a feature or a limitation for the confirmation use case?
-Think about: can the CALM agent improvise a response it wasn't trained on?
-Can it call a tool that wasn't defined in flows.yml?
+The CALM agent cannot improvise outside the flows defined in flows.yml, and it cannot call a tool that was not declared there. LangGraph could reason freely and call any available tool dynamically. For a booking confirmation use case, this constraint is a feature, not a limitation. You do not want an agent that improvises pricing, invents new policies, or takes actions the business did not explicitly authorise. The setup cost of config files, training, and a Rasa Pro licence buys you a bounded, auditable agent whose behaviour is fully predictable.
 """
