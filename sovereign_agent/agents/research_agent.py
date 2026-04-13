@@ -44,27 +44,10 @@ from __future__ import annotations
 
 import json
 import os
-<<<<<<< HEAD
-import sys
-from pathlib import Path
-
-# Ensure the project root (sovereign-agent-lab/) is on sys.path so that
-# `sovereign_agent` is importable when this file is loaded in isolation
-# (e.g. by grade.py via importlib.util.spec_from_file_location).
-_PROJECT_ROOT = Path(__file__).parent.parent.parent
-if str(_PROJECT_ROOT) not in sys.path:
-    sys.path.insert(0, str(_PROJECT_ROOT))
-
-from dotenv import load_dotenv
-from langchain_core.messages import HumanMessage, ToolMessage
-from langchain_openai import ChatOpenAI
-from langgraph.prebuilt import create_react_agent  # kept for task_d graph visualisation
-=======
 
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 from langgraph.prebuilt import create_react_agent
->>>>>>> upstream/main
 
 from sovereign_agent.tools.venue_tools import (
     calculate_catering_cost,
@@ -109,60 +92,6 @@ TOOLS = [
     generate_event_flyer,
 ]
 
-<<<<<<< HEAD
-# Kept for task_d graph visualisation in exercise2_langgraph.py
-_agent = create_react_agent(llm, TOOLS)
-
-
-# ─── Text-based tool call parser ──────────────────────────────────────────────
-# The Nebius TokenFactory endpoint with Llama 3.3-70B does not fully implement
-# OpenAI's function-calling protocol.  Instead of returning tool calls in the
-# structured `tool_calls` field, the model embeds them as a JSON array in the
-# plain text content, with each element being a JSON-encoded dict:
-#
-#   ["{"type": "function", "name": "...", "parameters": {...}}", ...]
-#
-# LangGraph's create_react_agent only checks message.tool_calls, sees nothing,
-# and immediately returns the JSON text as the "final answer".  This helper
-# parses that text format so the custom loop below can execute the tools.
-
-def _parse_text_tool_calls(content: str) -> list[dict]:
-    """
-    Parse Nebius/Llama text-based tool calls from a message content string.
-
-    Returns a list of {"name": str, "args": dict} dicts, or [] if none found.
-    """
-    if not isinstance(content, str):
-        return []
-    content = content.strip()
-    if not content.startswith("["):
-        return []
-    try:
-        outer = json.loads(content)
-        if not isinstance(outer, list):
-            return []
-        result = []
-        for item in outer:
-            # Each element may itself be a JSON-encoded string
-            if isinstance(item, str):
-                try:
-                    item = json.loads(item)
-                except Exception:
-                    continue
-            if not isinstance(item, dict):
-                continue
-            if item.get("type") == "function" and "name" in item:
-                args = item.get("parameters", item.get("arguments", {}))
-                if isinstance(args, str):
-                    try:
-                        args = json.loads(args)
-                    except Exception:
-                        args = {}
-                result.append({"name": item["name"], "args": args})
-        return result
-    except Exception:
-        return []
-=======
 # Build the agent once at module load time.
 _agent = create_react_agent(llm, TOOLS)
 
@@ -235,7 +164,6 @@ def _extract_tool_calls_from_message(m) -> list[dict]:
         if name:
             out.append({"tool": name, "args": args})
     return out
->>>>>>> upstream/main
 
 
 # ─── Public interface ─────────────────────────────────────────────────────────
@@ -258,75 +186,6 @@ def run_research_agent(task: str, max_turns: int = 8) -> dict:
     This return shape is the contract that Week 2+ code depends on.
     Do not change the key names.
     """
-<<<<<<< HEAD
-    llm_with_tools = llm.bind_tools(TOOLS)
-    tool_map = {t.name: t for t in TOOLS}
-
-    messages: list = [HumanMessage(content=task)]
-    tool_calls_made: list = []
-    full_trace: list = [{"role": "human", "content": task}]
-    final_answer = ""
-
-    for _ in range(max_turns):
-        response = llm_with_tools.invoke(messages)
-        messages.append(response)
-
-        # ── Collect tool calls: standard format first, text-based as fallback ─
-        tc_list = list(getattr(response, "tool_calls", []) or [])
-        is_text_based = False
-
-        if not tc_list:
-            parsed = _parse_text_tool_calls(response.content)
-            if parsed:
-                tc_list = [
-                    {"name": t["name"], "args": t["args"], "id": f"text_{i}"}
-                    for i, t in enumerate(parsed)
-                ]
-                is_text_based = True
-
-        if not tc_list:
-            # No tool calls — this is the final answer
-            final_answer = str(response.content) if response.content else ""
-            if final_answer:
-                full_trace.append({"role": "ai", "content": final_answer})
-            break
-
-        # ── Execute each tool and collect results ──────────────────────────────
-        tool_results = []
-        for tc in tc_list:
-            name = tc["name"]
-            args = tc.get("args", {})
-
-            tool_calls_made.append({"tool": name, "args": args})
-            full_trace.append({"role": "tool_call", "tool": name, "args": args})
-
-            tool_fn = tool_map.get(name)
-            result = (
-                tool_fn.invoke(args)
-                if tool_fn
-                else json.dumps({"success": False, "error": f"Unknown tool: {name}"})
-            )
-            full_trace.append({"role": "tool", "content": str(result)})
-            tool_results.append((tc, str(result)))
-
-        # ── Feed results back to the model ────────────────────────────────────
-        if is_text_based:
-            # Text-based calls: bundle all results into one human message
-            combined = "\n".join(
-                f"[{tc['name']} result]\n{result}"
-                for tc, result in tool_results
-            )
-            messages.append(HumanMessage(
-                content=f"Tool results:\n{combined}\n\nPlease provide your final answer."
-            ))
-        else:
-            # Standard calls: one ToolMessage per call
-            for tc, result in tool_results:
-                messages.append(ToolMessage(
-                    content=result,
-                    tool_call_id=tc["id"],
-                ))
-=======
     result = _agent.invoke(
         {"messages": [("user", task)]},
         config={"recursion_limit": max_turns * 2},
@@ -366,7 +225,6 @@ def run_research_agent(task: str, max_turns: int = 8) -> dict:
             full_trace.append({"role": msg_type, "content": content})
             if msg_type == "ai":
                 final_answer = content
->>>>>>> upstream/main
 
     return {
         "final_answer": final_answer,
