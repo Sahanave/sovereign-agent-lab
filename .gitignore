@@ -112,6 +112,11 @@ rasa_action_server.log
 # The week1/outputs/*.json files ARE committed — they are grading artifacts
 # that prove you ran the exercises. Do not add them to this section.
 #
+# Generated images (e.g. flyer PNGs) are large binaries — ignore them.
+week1/outputs/*.png
+week1/outputs/*.jpg
+week1/outputs/*.webp
+#
 # Ignore any local scratch files you create while experimenting:
 scratch/
 tmp/

@@ -234,29 +234,78 @@ def _build_flyer_prompt(venue_name: str, guest_count: int, event_theme: str) -> 
 
 def _attempt_real_image_generation(prompt: str) -> str | None:
     """
-    Try to generate a real image. Return the URL on success, or None on
-    any failure — we never raise from this helper.
+    Try to generate a real image and return a public HTTPS URL.
+    Returns None on any failure — never raises.
 
-    Enable this path by setting FLYER_IMAGE_MODEL in your .env to the name
-    of an image-generation model your provider still supports. As of the
-    2026-04-13 FLUX deprecation on Nebius, there is no default image model
-    configured — the tool will transparently use the placeholder path.
+    Workflow:
+      1. Call the image model (b64_json so we own the bytes immediately).
+      2. Upload the bytes to 0x0.st — a free, no-key file host — to get a
+         permanent public HTTPS URL the same way placehold.co gives one.
+
+    Enable by setting FLYER_IMAGE_MODEL in your .env.
     """
     model = os.getenv("FLYER_IMAGE_MODEL", "").strip()
     if not model:
         return None
     try:
-        from openai import OpenAI
+        import base64
 
         client = OpenAI(
             base_url=os.getenv(
                 "FLYER_IMAGE_BASE_URL",
                 "https://api.tokenfactory.nebius.com/v1/",
             ),
-            api_key=os.getenv("NEBIUS_KEY"),
+            api_key=os.getenv("FLYER_IMAGE_API_KEY") or os.getenv("NEBIUS_KEY"),
         )
-        response = client.images.generate(model=model, prompt=prompt, n=1)
-        return response.data[0].url
+        response = client.images.generate(
+            model=model,
+            prompt=prompt,
+            n=1,
+            response_format="b64_json",
+        )
+        img_bytes = base64.b64decode(response.data[0].b64_json)
+
+        # Try free image hosts in order — each returns a public HTTPS URL
+        hosts = [
+            lambda b: _upload_to_imgbb(b),
+        ]
+        for host in hosts:
+            url = host(img_bytes)
+            if url:
+                return url
+
+        # All uploads failed — save locally as last resort
+        from pathlib import Path
+        digest = hashlib.sha1(prompt.encode("utf-8")).hexdigest()[:8]
+        out_dir = Path(__file__).parent.parent.parent / "week1" / "outputs"
+        out_dir.mkdir(parents=True, exist_ok=True)
+        out_path = out_dir / f"flyer_{digest}.png"
+        out_path.write_bytes(img_bytes)
+        return out_path.as_uri()
+    except Exception as e:
+        print(f"[generate_event_flyer] live generation failed: {e}")
+        return None
+
+
+def _upload_to_imgbb(img_bytes: bytes) -> str | None:
+    """
+    Upload to imgbb.com — free API key, permanent public HTTPS URL.
+    Get a free key at https://api.imgbb.com (instant, no credit card).
+    Set IMGBB_API_KEY in your .env to enable this path.
+    """
+    api_key = os.getenv("IMGBB_API_KEY", "").strip()
+    if not api_key:
+        return None
+    try:
+        import base64
+        resp = requests.post(
+            "https://api.imgbb.com/1/upload",
+            params={"key": api_key},
+            data={"image": base64.b64encode(img_bytes).decode()},
+            timeout=20,
+        )
+        resp.raise_for_status()
+        return resp.json()["data"]["display_url"]  # direct image URL
     except Exception:
         return None
 

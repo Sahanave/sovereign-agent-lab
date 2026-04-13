@@ -10,7 +10,7 @@ Run `python grade.py ex1` to check for obvious issues before submitting.
 # The exact answer the model gave for each condition.
 # Copy-paste from your terminal output (the → "..." part).
 
-PART_A_PLAIN_ANSWER    = "The Haymarket Vaults"
+PART_A_PLAIN_ANSWER    = "The Albanach"
 PART_A_XML_ANSWER      = "The Albanach"
 PART_A_SANDWICH_ANSWER = "The Albanach"
 
@@ -24,12 +24,12 @@ PART_A_SANDWICH_CORRECT = True
 # Explain what you observed. Minimum 30 words.
 
 PART_A_EXPLANATION = """
-Even the plain version had some structure, which likely explains why the results were similar to the XML and Sandwich formats. The plain version also used the fewest tokens.
+The amount of tokens used was similar and low (200 - 250 tokens). All three formatting conditions produced the same correct answer, suggesting the model was reliably able to extract the correct venue from the context.
 """
 
 # ── Part B ─────────────────────────────────────────────────────────────────
 
-PART_B_PLAIN_ANSWER    = "The Albanach"
+PART_B_PLAIN_ANSWER    = "The Haymarket Vaults"  
 PART_B_XML_ANSWER      = "The Albanach"
 PART_B_SANDWICH_ANSWER = "The Albanach"
 
@@ -58,7 +58,7 @@ PART_C_SANDWICH_ANSWER = "The Haymarket Vaults"
 
 # Explain what Part C showed, or why it wasn't needed. Minimum 30 words.
 PART_C_EXPLANATION = """
-Part C did not feel especially necessary because the 8B model is still fairly capable, and it performed as expected without being confused by the distractors.
+Part C did not feel especially necessary because the 2B model is still fairly capable, and it performed as expected without being confused by the distractors. The small model handled the structured context just as well as the larger one.
 """
 
 # ── Core lesson ────────────────────────────────────────────────────────────
