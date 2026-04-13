@@ -234,8 +234,7 @@ Your input ->  50
 
 What deposit amount in GBP are you proposing to secure the booking?
 Your input ->  200                                                                                                                            
-
-Thank you — booking confirmed. 160 guests, 50 requiring vegan meals, £200 deposit accepted. I'll send written confirmation to the organiser shortly.
+I need to check one thing with the organiser before I can confirm. The issue is: it is past 16:45 — insufficient time to process the confirmation before the 5 PM deadline. Can I call you back within 15 minutes?
 Is there anything else I can help you with?
 """
 
