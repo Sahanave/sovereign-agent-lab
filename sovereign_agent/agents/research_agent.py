@@ -46,6 +46,16 @@ The agent picks up the new capability automatically — no other changes needed.
 
 import json
 import os
+import sys
+from pathlib import Path
+
+# Ensure the project root (sovereign-agent-lab/) is on sys.path so that
+# `sovereign_agent` is importable when this file is loaded in isolation
+# (e.g. by grade.py via importlib.util.spec_from_file_location).
+_PROJECT_ROOT = Path(__file__).parent.parent.parent
+if str(_PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(_PROJECT_ROOT))
+
 from dotenv import load_dotenv
 from langchain_core.messages import HumanMessage, ToolMessage
 from langchain_openai import ChatOpenAI
