@@ -116,6 +116,7 @@ class ActionValidateBooking(Action):
         # Uncomment these four lines to add the time-based escalation guard.
         #
         now = datetime.datetime.now()
+        print(now)
         if now.hour > 16 or (now.hour == 16 and now.minute >= 45):
              return escalate(
                  "it is past 16:45 — insufficient time to process the confirmation"

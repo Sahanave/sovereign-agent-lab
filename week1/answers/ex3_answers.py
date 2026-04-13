@@ -189,14 +189,319 @@ At the same time, from a security perspective, I felt the opposite. The LangGrap
 
 # ── Task B: Cutoff guard ───────────────────────────────────────────────────
 
-TASK_B_DONE = None   # True or False
+TASK_B_DONE = True   # True or False
 
 # List every file you changed.
-TASK_B_FILES_CHANGED = []
+TASK_B_FILES_CHANGED = ["exercise3_rasa/actions/actions.py"]
 
 # How did you test that it works? Min 20 words.
 TASK_B_HOW_YOU_TESTED = """
-FILL ME IN
+warning: `VIRTUAL_ENV=/Users/sahanavenkatesh/nebius/lesson_1_ai_agents/assignment1/sovereign-agent-lab/.venv` does not match the project environment path `.venv` and will be ignored; use `--active` to target the active environment instead
+2026-04-14 00:29:10 INFO     rasa.tracing.backend_tracing_config  - [info     ] No backend tracing configuration found in endpoints.yml. Supported backend tracing types are 'jaeger' and 'otlp'. Backend tracing will not be configured. event_key=endpoint.read.no_backend_tracing_config filename=/Users/sahanavenkatesh/nebius/lesson_1_ai_agents/assignment1/sovereign-agent-lab/exercise3_rasa/endpoints.yml
+2026-04-14 00:29:11 INFO     root  - Starting Rasa server on http://0.0.0.0:5005
+2026-04-14 00:29:12 INFO     rasa.core.processor  - [info     ] Loading model.                 event_key=rasa.core.processor.load_model model_path=models/20260414-002830-unsolvable-union.tar.gz
+2026-04-14 00:29:12 INFO     rasa.shared.core.domain  - [info     ] domain.from_yaml.validating   
+/Users/sahanavenkatesh/nebius/lesson_1_ai_agents/assignment1/sovereign-agent-lab/exercise3_rasa/.venv/lib/python3.10/site-packages/rasa/shared/utils/configs.py:53: FutureWarning: None: 'max_tokens' is deprecated and will be removed in 4.0.0. Use 'max_completion_tokens' instead.
+  raise_deprecation_warning(
+2026-04-14 00:29:12 WARNING  rasa.shared.utils.llm  - [warning  ] The LLM_API_HEALTH_CHECK environment variable is set to false, which will disable LLM health check. It is recommended to set this variable to true in production environments. event_key=llm_based_command_generator.load.perform_llm_health_check.disabled
+2026-04-14 00:29:12 INFO     rasa.dialogue_understanding.generator.llm_based_command_generator  - [info     ] llm_based_command_generator.flow_retrieval.enabled
+2026-04-14 00:29:12 WARNING  rasa.shared.utils.llm  - [warning  ] The LLM_API_HEALTH_CHECK environment variable is set to false, which will disable embeddings API health check. It is recommended to set this variable to true in production environments. event_key=flow_retrieval.load.perform_embeddings_health_check.disabled
+2026-04-14 00:29:12 INFO     faiss.loader  - Loading faiss with AVX2 support.
+2026-04-14 00:29:13 INFO     faiss.loader  - Successfully loaded faiss with AVX2 support.
+2026-04-14 00:29:13 INFO     rasa.shared.core.domain  - [info     ] domain.from_yaml.validating   
+2026-04-14 00:29:13 WARNING  rasa.validator  - [warning  ] Default pattern flows include responses with rephrasing enabled, but the NLG endpoint is not configured in endpoints.yml. Rephrasing for default patterns will be skipped. event_key=validator.verify_rephrase_endpoints_consistency.defaults_only_rephrase_without_nlg
+2026-04-14 00:29:13 INFO     root  - Rasa server is up and running.
+Bot loaded. Type a message and press enter (use '/stop' to exit): 
+Your input ->   calling to confirm a booking                                                                                                  
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+How many guests are you confirming for tonight's event?
+Your input ->  160 guests                                                                                                                     
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+2026-04-14 00:29:58 WARNING  rasa.utils.log_utils  - [warning  ] CompactLLMCommandGenerator.parse_commands actions='<think>
+Okay, let\'s see. The user called to confirm a booking, and the AI asked for the number of guests. The user responded with "160 guests". 
+
+First, I need to check the active flow. The current flow is confirm_booking, and the requested slot is guest_count. The user provided 160, which is a number. The slot for guest_count is of type float, so I should set that slot to 160.0.
+
+Since the user answered the question, the next step would be to move to the next requested slot in the flow. But the current step only mentions guest_count as the requested slot. The other slots, vegan_count and deposit_amount_gbp, are still undefined. So the AI should probably ask for the next piece of information, which would be either vegan_count or deposit_amount_gbp. But according to the instructions, I should only process the user\'s last message. The user only provided guest_count, so I set that slot and then the flow continues. The next action would be to prompt for the next required slot. However, the current step in the active flow only has guest_count as the requested slot. Wait, maybe the flow is structured to ask one slot at a time. So after setting guest_count, the AI should proceed to ask for the next slot, which might be vegan_count. But the current state\'s current_step only has guest_count as the requested slot. Maybe the system is designed to handle each slot step by step. So after setting guest_count, the next step would be to ask for the next slot. But the user hasn\'t provided any other info yet. So the action here is to set the guest_count slot to 160.0 and then the system will handle the next step, which might be to ask for vegan_count or deposit_amount. But according to the instructions, I only need to output the actions based on the user\'s last message. So the correct action here is to set the guest_count slot with 160.0 and start the confirm_booking flow if it\'s not already active. Wait, the active flow is already confirm_booking, so no need to start it again. So the action is just setting the slot. Also, check if there\'s any other info in the user\'s message. The user said "160 guests", which directly answers the guest_count. No other slots mentioned. So the only action is to set the guest_count to 160.0.
+</think>' message='No commands were parsed from the LLM actions.'
+2026-04-14 00:29:58 WARNING  rasa.utils.log_utils  - [warning  ] llm_command_generator.predict_commands message='No commands were predicted as the LLM response could not be parsed or the LLM responded with an invalid command. Returning a CannotHandleCommand instead.'
+I’m sorry I am unable to understand you, could you please rephrase?
+How many guests are you confirming for tonight's event?
+Your input ->  160 guests                                                                                                                     
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+And how many of those guests will need vegan meals?
+Your input ->  50                                                                                                                             
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+What deposit amount in GBP are you proposing to secure the booking?
+Your input ->  200                                                                                                                            
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+
+Provider List: https://docs.litellm.ai/docs/providers
+
+Thank you — booking confirmed. 160 guests, 50 requiring vegan meals, £200 deposit accepted. I'll send written confirmation to the organiser shortly.
+Is there anything else I can help you with?
 """
 
 # ── CALM vs Old Rasa ───────────────────────────────────────────────────────
