@@ -12,7 +12,6 @@ TOOLS_DISCOVERED = ["search_venues", "get_venue_details"]
 QUERY_1_VENUE_NAME    = "The Haymarket Vaults."
 QUERY_1_VENUE_ADDRESS = "1 Dalry Road, Edinburgh"
 QUERY_2_FINAL_ANSWER  =  "Okay, the user is looking for a venue in Edinburgh that can hold 300 people and has vegan options. I first tried using the search_venues function with min_capacity 300 and requires_vegan true, but got a validation error. Then I adjusted the call to include the parameters under the \"input\" object, which fixed the error. However, the response came back with zero matches.\n\nHmm, so there are no venues that meet both the capacity and vegan requirements. But maybe the user is okay with a venue that has a vegan option but isn't strictly required? Or perhaps they can adjust the capacity? Let me check the functions again. The search_venues function allows specifying min_capacity and requires_vegan. If there are no results, maybe I should consider lowering the min_capacity or checking if the vegan requirement is too strict.\n\nWait, the user specifically asked for vegan options, so maybe they can't compromise on that. In that case, there's no venue available. But I should present this clearly. Alternatively, maybe there's a mistake in the parameters. Let me confirm the function's parameters again. The function requires min_capacity as a number and requires_vegan as a boolean. The user's input was correct.\n\nSo the answer should inform the user that no venues meet the criteria. Maybe suggest adjusting the capacity or checking other options. But since the user's query was specific, I should state that there are no available venues with those requirements.\n</think>\n\nThere are currently no Edinburgh venues available that can accommodate 300 people with vegan options. Would you like to try adjusting the capacity requirements or checking for non-vegan venues?"
-"
 
 # ── The experiment ─────────────────────────────────────────────────────────
 # Required: modify venue_server.py, rerun, revert.
@@ -21,7 +20,7 @@ EX4_EXPERIMENT_DONE = True   # True or False
 
 # What changed, and which files did or didn't need updating? Min 30 words.
 EX4_EXPERIMENT_RESULT = """
-I need to update modify venue_server.py and change  The Albanach status to full. For the first query, it was able to confirm The Haymarket Vaults. The second query failed as there was no queue with the required capacity.
+I needed to modify venue_server.py and change The Albanach's status to full. For the first query, it was able to confirm The Haymarket Vaults. The second query failed as there was no venue with the required capacity.
 """
 
 # ── MCP vs hardcoded ───────────────────────────────────────────────────────
