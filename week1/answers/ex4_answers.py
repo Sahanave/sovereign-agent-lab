@@ -77,10 +77,11 @@ WEEK_5_ARCHITECTURE = """
      list of subgoals. It lives upstream of the ReAct loop in the
      autonomous-loop half of PyNanoClaw, so the Executor never sees an
      ambiguous task.
-- The Executor is a weaker model which executes  takes the raw task  produced by the planner fast. 
+- The Executor is a weaker model which takes the subgoals produced by the Planner and executes them fast.
     It lives downstream of the ReAct loop in the autonomous-loop half of PyNanoClaw.
-- The Memory store is a component that is shared between autonomous loop and structured agent. This stores episodes, general summary across conversations.
-- The Structured Agent is a simple agent with reasoning model and rules to follow. This is to make sure we are following logic for core business.
+- The Memory store is a component that is shared between the autonomous loop and the structured agent. It stores episodes and general summaries across conversations.
+- The Structured Agent is a simple agent with a reasoning model and rules to follow. This is to make sure we are following the core business logic.
+-  Tools / MCP servers for the Exectuor to execute the goals. They can be simple python functions to complicated queries.
 """
 
 # ── The guiding question ───────────────────────────────────────────────────
@@ -88,6 +89,6 @@ WEEK_5_ARCHITECTURE = """
 # Must reference specific things you observed in your runs. Min 60 words.
 
 GUIDING_QUESTION_ANSWER = """
-For research, an autonomous loop makes sense. Research needs a structure with clear goals, but it also needs room to branch out and explore different directions. It is hard to tightly constrain research, because some of the best insights come from following unexpected avenues. You can set basic boundaries, but the model should still have freedom to explore multiple paths and deepen understanding of the topic.
-For a call flow, I would use a more structured agent. In that setting, it is important for the model to follow a clear and reliable logic. The agent should not expose its internal architecture, because that makes it more vulnerable to external attacks. It also needs to stick closely to the business logic, handle failures well, and remain robust under pressure.
+For research, an autonomous loop makes sense. Research needs a structure with clear goals, but it also needs room to branch out and explore different directions. It is hard to tightly constrain research, because some of the best insights come from following unexpected avenues. You can set basic boundaries, but the model should still have freedom to explore multiple paths and deepen its understanding of the topic.
+For a call flow, I would use a more structured agent. In that setting, it is important for the model to follow clear and reliable logic. The agent should not expose its internal architecture, because that makes it more vulnerable to external attacks. It also needs to stick closely to the business logic, handle failures well, and remain robust under pressure.
 """
