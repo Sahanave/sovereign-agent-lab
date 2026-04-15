@@ -81,7 +81,7 @@ WEEK_5_ARCHITECTURE = """
     It lives downstream of the ReAct loop in the autonomous-loop half of PyNanoClaw.
 - The Memory store is a component that is shared between the autonomous loop and the structured agent. It stores episodes and general summaries across conversations.
 - The Structured Agent is a simple agent with a reasoning model and rules to follow. This is to make sure we are following the core business logic.
--  Tools / MCP servers for the Exectuor to execute the goals. They can be simple python functions to complicated queries.
+- Tools / MCP servers for the Executor to execute the goals. They can range from simple Python functions to complicated queries.
 """
 
 # ── The guiding question ───────────────────────────────────────────────────
@@ -91,4 +91,5 @@ WEEK_5_ARCHITECTURE = """
 GUIDING_QUESTION_ANSWER = """
 For research, an autonomous loop makes sense. Research needs a structure with clear goals, but it also needs room to branch out and explore different directions. It is hard to tightly constrain research, because some of the best insights come from following unexpected avenues. You can set basic boundaries, but the model should still have freedom to explore multiple paths and deepen its understanding of the topic.
 For a call flow, I would use a more structured agent. In that setting, it is important for the model to follow clear and reliable logic. The agent should not expose its internal architecture, because that makes it more vulnerable to external attacks. It also needs to stick closely to the business logic, handle failures well, and remain robust under pressure.
+In the train-related queries, the LangGraph agent referenced sources like National Rail even though those sources were not explicitly exposed as available tools. That made it feel more capable from a user experience standpoint, but it also raised concerns about how clearly it respected its actual tool boundaries. By contrast, the Rasa car agent handled the situation in a much more controlled way: it clearly stated that the request was outside its scope, directed the user to contact the event organizer, and did so without exposing anything about its internal setup.
 """
