@@ -72,11 +72,15 @@ It is also more robust. Since each tool can run in its own environment, it is ea
 #     ambiguous task.
 
 WEEK_5_ARCHITECTURE = """
-- FILL ME IN
-- FILL ME IN
-- FILL ME IN
-- FILL ME IN
-- FILL ME IN
+- The Planner is a strong-reasoning model (e.g. Nemotron-3-Super or
+     Qwen3-Next-Thinking) that takes the raw task and produces an ordered
+     list of subgoals. It lives upstream of the ReAct loop in the
+     autonomous-loop half of PyNanoClaw, so the Executor never sees an
+     ambiguous task.
+- The Executor is a weaker model which executes  takes the raw task  produced by the planner fast. 
+    It lives downstream of the ReAct loop in the autonomous-loop half of PyNanoClaw.
+- The Memory store is a component that is shared between autonomous loop and structured agent. This stores episodes, general summary across conversations.
+- The Structured Agent is a simple agent with reasoning model and rules to follow. This is to make sure we are following logic for core business.
 """
 
 # ── The guiding question ───────────────────────────────────────────────────
@@ -84,5 +88,6 @@ WEEK_5_ARCHITECTURE = """
 # Must reference specific things you observed in your runs. Min 60 words.
 
 GUIDING_QUESTION_ANSWER = """
-FILL ME IN
+For research, an autonomous loop makes sense. Research needs a structure with clear goals, but it also needs room to branch out and explore different directions. It is hard to tightly constrain research, because some of the best insights come from following unexpected avenues. You can set basic boundaries, but the model should still have freedom to explore multiple paths and deepen understanding of the topic.
+For a call flow, I would use a more structured agent. In that setting, it is important for the model to follow a clear and reliable logic. The agent should not expose its internal architecture, because that makes it more vulnerable to external attacks. It also needs to stick closely to the business logic, handle failures well, and remain robust under pressure.
 """
